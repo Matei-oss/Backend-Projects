@@ -1,0 +1,14 @@
+{
+  "name": "calculator-app-simple",
+  "version": "1.0.0",
+  "description": "simple calculator",
+  "main": "calculator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matei",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

@@ -13,6 +13,13 @@ app.get("/", function(req, res) {
     https.get(url, function(response) {
 
         console.log(response.statusCode);
+        response.on("data", function(data) {
+            const weatherData = JSON.parse(data);
+            const temp = weatherData.main.temp;
+            const description = weatherData.weather[0].description;
+            console.log(description);
+            console.log("Temperature is " + temp);
+        })
     })
 
     res.send("Server is up and running.")

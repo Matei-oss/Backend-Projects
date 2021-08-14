@@ -1,14 +1,22 @@
 const express = require("express");
 const https = require("https");
+const bodyParser = require("body-parser");
 
 const app = express();
 
-app.listen(3000, function() {
-    console.log("Server is running on port 3000.");
-})
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", function(req, res) {
-    const url = "https://api.openweathermap.org/data/2.5/weather?q=London&appid=88b8424223e3f18e283b4facb5dcf87a&units=metric";
+    res.sendFile(__dirname + "/index.html");
+})
+
+app.post("/", function(req, res) {
+
+    const query = req.body.cityName;
+    const apiKey = "88b8424223e3f18e283b4facb5dcf87a";
+    const unit = "metric";
+    const url = "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=" +
+        apiKey + "&units=" + unit;
 
     https.get(url, function(response) {
 
@@ -24,10 +32,15 @@ app.get("/", function(req, res) {
             console.log(description);
             console.log("Temperature is " + temp);
             res.write("<p>The weather is currently " + description + "</p>");
-            res.write("<h1>Temperature in London is " + temp + " degrees Celsius.</h1>");
+            res.write("<h1>Temperature in " + query + " is " + temp + " degrees Celsius.</h1>");
             res.write("<img src=" + iconUrl + ">");
             res.send();
         })
     })
 
+})
+
+
+app.listen(3000, function() {
+    console.log("Server is running on port 3000.");
 })

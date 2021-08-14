@@ -44,16 +44,22 @@ app.post("/", function(req, res) {
         method: "POST",
         auth: "amateiu:"
     }
+
+    //we defined the "function" as a const
     const request = https.request(url, options, function(response) {
         response.on("data", function(data) {
             console.log(JSON.parse(data));
         })
     })
+
+    //error - success resolution
     if (response.error_count === 0) {
         res.sendFile(__dirname + "/success.html");
     } else {
         res.sendFile(__dirname + "/failure.html");
     }
+
+    //using the const, we send data to MailChimp API
     request.write(jsonData);
     request.end();
 

@@ -52,19 +52,19 @@
 <body class="text-center">
 
     <main class="form-signin">
-        <form>
+        <form method="POST" action="/">
             <img class="mb-4" src="bear.png" alt="" width="250" height="250">
             <h1 class="h3 mb-3 fw-normal">Comrade, subscribe!</h1>
             <div class="form-floating">
-                <input type="text" class="form-control top" placeholder="First Name">
+                <input name="fName" type="text" class="form-control top" placeholder="First Name">
                 <label for="floatingInput">First name</label>
             </div>
             <div class="form-floating">
-                <input type="text" class="form-control middle" placeholder="Last Name">
+                <input name="lName" type="text" class="form-control middle" placeholder="Last Name">
                 <label for="floatingInput">Last Name</label>
             </div>
             <div class="form-floating">
-                <input type="email" class="form-control bottom" placeholder="Email">
+                <input name="email" type="email" class="form-control bottom" placeholder="Email">
                 <label for="floatingInput">Email address</label>
             </div>
 

@@ -42,22 +42,26 @@ app.post("/", function(req, res) {
     const url = "https://us5.api.mailchimp.com/3.0/lists/9c39975fb2"
     const options = {
         method: "POST",
-        auth: "amateiu:4ad152a0a05442d62579f793d7286c41-us5"
+        auth: "amateiu:"
     }
     const request = https.request(url, options, function(response) {
         response.on("data", function(data) {
             console.log(JSON.parse(data));
         })
     })
-    if (response.statusCode === 200) {
-        res.send("Successfully subscribed!");
+    if (response.error_count === 0) {
+        res.sendFile(__dirname + "/success.html");
     } else {
-        res.send("There was an error!");
+        res.sendFile(__dirname + "/failure.html");
     }
     request.write(jsonData);
     request.end();
 
     console.log(firstName, lastName, email);
+})
+
+app.post("/failure", function(req, res) {
+    res.redirect("/");
 })
 
 //app will listen on port 3000 - localhost

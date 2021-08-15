@@ -8,6 +8,7 @@ const app = express();
 
 var items = ["Todo Example - 1", "Todo Example - 2"];
 
+app.use(express.static("public"));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 

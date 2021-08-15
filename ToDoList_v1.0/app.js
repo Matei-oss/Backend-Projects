@@ -6,7 +6,7 @@ const { render } = require("ejs");
 
 const app = express();
 
-var items = [];
+var items = ["Todo Example - 1", "Todo Example - 2"];
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));

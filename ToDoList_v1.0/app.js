@@ -29,8 +29,6 @@ app.post("/", function(req, res) {
         items.push(item);
         res.redirect("/")
     }
-
-    items.push(item);
     console.log(item);
 })
 

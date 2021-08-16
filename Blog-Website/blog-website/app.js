@@ -39,7 +39,12 @@ app.get("/compose", function(req, res) {
     res.render("compose.ejs");
 })
 
-
+app.post("/compose", function(req, res) {
+    let postTitle = req.body.articleTitleInput;
+    let postContent = req.body.postInput;
+    console.log(postTitle);
+    console.log(postContent);
+})
 
 
 

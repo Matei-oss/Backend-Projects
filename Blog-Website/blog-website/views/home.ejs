@@ -3,5 +3,12 @@
     <p>
         <%= startingContent %>
     </p>
-
-    <%- include("partials/footer") -%>
+    <%      postsList.forEach(function(post){ %>
+        <h1>
+            <%= post.title %>
+        </h1>
+        <p>
+            <%= post.content %>
+        </p>
+        <% }) %>
+            <%- include("partials/footer") -%>

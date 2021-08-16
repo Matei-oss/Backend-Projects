@@ -10,17 +10,20 @@ const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rho
 
 const app = express();
 
+var posts = [];
+
 app.set('view engine', 'ejs');
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-
 
 
 app.get("/", function(req, res) {
     res.render("home.ejs", {
         startingContent: homeStartingContent,
     });
+    console.log(posts);
 })
 
 app.get("/about", function(req, res) {
@@ -42,14 +45,14 @@ app.get("/compose", function(req, res) {
 app.post("/compose", function(req, res) {
     let postTitle = req.body.articleTitleInput;
     let postContent = req.body.postInput;
-    console.log(postTitle);
-    console.log(postContent);
+    const post = {
+        title: postTitle,
+        content: postContent
+    }
+    posts.push(post);
+    res.redirect("/");
+
 })
-
-
-
-
-
 
 
 app.listen(3000, function() {

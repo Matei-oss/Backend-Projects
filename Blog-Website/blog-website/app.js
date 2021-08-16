@@ -50,9 +50,14 @@ app.get("/posts/:postReference", function(req, res) {
     posts.forEach(function(post) {
         const storedTitle = _.lowerCase(post.title);
         if (storedTitle === reqPost) {
-            console.log("It's matching!");
+            res.render("post.ejs", {
+                title: post.title,
+                content: post.content
+            });
         }
     });
+
+
 });
 
 app.post("/compose", function(req, res) {

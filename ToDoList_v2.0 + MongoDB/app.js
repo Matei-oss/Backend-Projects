@@ -29,6 +29,12 @@ const item3 = new Item({
 
 const defaultItems = [item1, item2, item3];
 
+const listSchema = {
+    name: String,
+    items: [itemsSchema]
+};
+
+const List = mongoose.model("List", listSchema);
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -49,6 +55,26 @@ app.get("/", function(req, res) {
             res.render("list.ejs", { listTitle: "Today", newListItem: foundItems });
         }
     });
+
+});
+
+app.get("/:customListName", function(req, res) {
+    const customListName = req.params.customListName;
+
+    List.findOne({ name: customListName }, function(err, foundList) {
+        if (!err) {
+            if (!foundList) {
+                const list = new List({
+                    name: customListName,
+                    items: defaultItems
+                });
+                list.save();
+                res.redirect("/" + customListName);
+            } else {
+                res.render("list.ejs", { listTitle: foundList.name, newListItem: foundList.items });
+            }
+        }
+    })
 
 });
 
@@ -76,18 +102,14 @@ app.post("/delete", function(req, res) {
     const checkedItemId = req.body.checkbox;
 
     Item.findByIdAndRemove(checkedItemId, function(err) {
-        if (err) {
-            console.log(err);
-        } else {
+        if (!err) {
             console.log("Successfully deleted item!");
+            res.redirect("/");
         }
-        res.redirect("/");
+
     });
 })
 
-app.get("/work", function(req, res) {
-    res.render("list.ejs", { listTitle: "Work List", newListItem: workItems });
-})
 
 app.get("/about", function(req, res) {
     res.render("about.ejs");

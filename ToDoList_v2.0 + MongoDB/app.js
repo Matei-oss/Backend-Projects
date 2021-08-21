@@ -72,6 +72,19 @@ app.post("/", function(req, res) {
     // console.log(item);
 })
 
+app.post("/delete", function(req, res) {
+    const checkedItemId = req.body.checkbox;
+
+    Item.findByIdAndRemove(checkedItemId, function(err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Successfully deleted item!");
+        }
+        res.redirect("/");
+    });
+})
+
 app.get("/work", function(req, res) {
     res.render("list.ejs", { listTitle: "Work List", newListItem: workItems });
 })
@@ -85,6 +98,8 @@ app.post("/work", function(req, res) {
     workItems.push(item);
     res.redirect("/work");
 })
+
+
 
 app.listen(3000, function() {
     console.log("Server started on port 3000");

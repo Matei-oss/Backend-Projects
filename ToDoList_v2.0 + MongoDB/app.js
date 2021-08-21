@@ -80,13 +80,24 @@ app.get("/:customListName", function(req, res) {
 
 app.post("/", function(req, res) {
     const itemName = req.body.newItem;
+    const listName = req.body.list;
 
     const item = new Item({
         name: itemName
     });
 
-    item.save();
-    res.redirect("/");
+    if (listName === "Today") {
+        item.save();
+        res.redirect("/");
+    } else {
+        List.findOne({ name: listName }, function(err, foundList) {
+            foundList.items.push(item);
+            foundList.save();
+            res.redirect("/" + listName);
+        })
+    }
+
+
 
     // if (req.body.list === "Work") {
     //     workItems.push(item);
@@ -96,7 +107,7 @@ app.post("/", function(req, res) {
     //     res.redirect("/")
     // }
     // console.log(item);
-})
+});
 
 app.post("/delete", function(req, res) {
     const checkedItemId = req.body.checkbox;

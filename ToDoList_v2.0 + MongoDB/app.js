@@ -1,5 +1,8 @@
 //jshint esversion:6
 
+const PORT = 3000;
+const HOST = '0.0.0.0';
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const { render } = require("ejs");
@@ -149,6 +152,5 @@ app.post("/work", function(req, res) {
 
 
 
-app.listen(3000, function() {
-    console.log("Server started on port 3000");
-})
+app.listen(PORT, HOST);
+console.log(`Running on http://${HOST}:${PORT}`);

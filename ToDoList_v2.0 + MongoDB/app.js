@@ -5,10 +5,11 @@ const bodyParser = require("body-parser");
 const { render } = require("ejs");
 const date = require(__dirname + "/date.js");
 
+const
+
 const app = express();
 
-var items = ["Todo Example - 1", "Todo Example - 2"];
-var workItems = [];
+
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));

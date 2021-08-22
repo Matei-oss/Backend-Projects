@@ -26,13 +26,15 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-let posts = [];
-
 app.get("/", function(req, res) {
-    res.render("home", {
-        startingContent: homeStartingContent,
-        posts: posts
-    });
+
+    Post.find({}, function(err, foundPosts) {
+        res.render("home", {
+            startingContent: homeStartingContent,
+            posts: foundPosts
+        });
+    })
+
 });
 
 app.get("/about", function(req, res) {
@@ -48,29 +50,31 @@ app.get("/compose", function(req, res) {
 });
 
 app.post("/compose", function(req, res) {
-    const post = new Post {
+    const post = new Post({
         title: req.body.postTitle,
         content: req.body.postBody
-    };
+    });
 
-    post.save();
-
-    res.redirect("/");
-
+    post.save(function(err) {
+        if (!err) {
+            res.redirect("/");
+        }
+    });
 });
 
-app.get("/posts/:postName", function(req, res) {
-    const requestedTitle = _.lowerCase(req.params.postName);
+app.get("/posts/:postId", function(req, res) {
 
-    posts.forEach(function(post) {
-        const storedTitle = _.lowerCase(post.title);
+    const requestedPostId = req.params.postId;
+    Post.findOne({ _id: requestedPostId }, function(err, post) {
 
-        if (storedTitle === requestedTitle) {
-            res.render("post", {
-                title: post.title,
-                content: post.content
-            });
-        }
+        res.render("post", {
+
+            title: post.title,
+
+            content: post.content
+
+        });
+
     });
 
 });

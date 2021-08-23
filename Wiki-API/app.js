@@ -75,8 +75,16 @@ app.route("/articles/:articleTitle")
         } else {
             res.send("No articles matching the title found!");
         }
+    });
+})
+
+.put(function(req, res) {
+    Article.update({ title: req.params.articleTitle }, { title: req.body.title, content: req.body.content }, { overwrite: true }, function(err) {
+        if (!err) {
+            res.send("Successfully updated article!");
+        }
     })
-});
+})
 
 
 

@@ -63,7 +63,7 @@ app.post("/register", function(req, res) {
 
 app.post("/login", function(req, res) {
     const userName = req.body.username;
-    const password = md5(req.body.password);
+    const password = req.body.password;
 
     console.log(password);
 
@@ -72,10 +72,11 @@ app.post("/login", function(req, res) {
             console.log(err)
         } else {
             if (foundUser) {
-                if (foundUser.password === password) {
-                    console.log(foundUser.password)
-                    res.render("secrets.ejs");
-                }
+                bcrypt.compare(password, foundUser.password, function(err, result) {
+                    if (result === true) {
+                        res.render("secrets.ejs");
+                    }
+                });
             }
         }
     })

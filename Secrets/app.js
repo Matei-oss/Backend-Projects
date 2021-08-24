@@ -5,8 +5,10 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 // const encrypt = require("mongoose-encryption"); - MONGOOSE-ENCRYPTION
-const md5 = require("md5");
+// const md5 = require("md5");
 
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const app = express();
 
@@ -42,18 +44,21 @@ app.get("/register", function(req, res) {
 ///POST METHODS///
 
 app.post("/register", function(req, res) {
-    const newUser = new User({
-        email: req.body.username,
-        password: md5(req.body.password)
-    });
-    newUser.save(function(err) {
-        if (err) {
-            console.log(err)
-        } else {
-            res.render("secrets.ejs")
-        }
-    });
-    console.log(newUser);
+    bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+        const newUser = new User({
+            email: req.body.username,
+            password: hash
+        });
+        newUser.save(function(err) {
+            if (err) {
+                console.log(err)
+            } else {
+                res.render("secrets.ejs")
+            }
+        });
+        console.log(newUser);
+    })
+
 });
 
 app.post("/login", function(req, res) {

@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
 
 const secret = "x?$6Lp*U+sT=RVt?";
 
-userSchema.plugin(encrypt, { secret: secret });
+userSchema.plugin(encrypt, { secret: secret, encryptedFields: ['password'] });
 
 const User = new mongoose.model("User", userSchema);
 

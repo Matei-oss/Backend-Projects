@@ -8,6 +8,8 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 
+const findOrCreate = require("mongoose-findorcreate");
+
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 // const encrypt = require("mongoose-encryption"); - MONGOOSE-ENCRYPTION
 // const md5 = require("md5");
@@ -40,6 +42,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(findOrCreate);
 
 // userSchema.plugin(encrypt, { secret: process.env.SECRET, encryptedFields: ['password'] }); - MONGOOSE-ENCRYPTION
 

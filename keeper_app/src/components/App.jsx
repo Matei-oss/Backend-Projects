@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Header from "./Header"
 import Footer from "./Footer"
 import Note from "./Note"
@@ -13,6 +13,10 @@ function App() {
             return [...prevNotes,newNote];
         });
     }
+
+    function deleteNote(id){
+        setNotes()
+    }
     return <div>
         <Header />
         <CreateArea
@@ -22,6 +26,7 @@ function App() {
             return <Note 
                 title={noteItem.title}
                 content={noteItem.content}
+                onDelete={deleteNote}
             />
         }))}
         
